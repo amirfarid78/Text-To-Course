@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="<?php echo $sm['config']['theme_url_landing']; ?>/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900;400&family=Pacifico&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <title><?php echo $sm['seoLang']['landing'][1]['text']; ?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="<?php echo $sm['seoLang']['landing'][2]['text']; ?>">
+    <meta name="keywords" content="<?php echo $sm['seoLang']['landing'][3]['text']; ?>">
+    <meta name="author" content="<?php echo $sm['config']['name']; ?>">
+    <link rel="icon" type="image/png" href="<?= $sm['landing']['favicon']['val']; ?>" sizes="32x32">
+
+    <?php $fonts = getArrayDSelected('font', 'theme_preset_fonts', 'where preset = "' . $_SESSION['landingPreset'] . '"');
+    foreach ($fonts as $font) {
+        $f = $font['font'];
+        $f = str_replace(' ', '+', $f);
+        echo '<link href="https://fonts.googleapis.com/css?family=' . $f . '" rel="stylesheet" type="text/css"/>';
+    } ?>
+    <style id="themeData">
+        <?= getLandingAbsolutePage('styles'); ?>
+    </style>
+    <script type="text/javascript">
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+        function detect_device() {
+            var w = window,
+                d = document,
+                e = d.documentElement,
+                g = d.getElementsByTagName('body')[0],
+                x = w.innerWidth || e.clientWidth || g.clientWidth,
+                y = w.innerHeight || e.clientHeight || g.clientHeight;
+            if (x <= 768) {
+                window.location = '<?= $sm['config']['site_url']; ?>';
+            }
+        }
+        <?php if ($sm['landing']['show_mobile']['val'] == 'No') { ?>
+            if (inIframe() !== true) {
+                detect_device();
+                window.onresize = function () {
+                    var w = window,
+                        d = document,
+                        e = d.documentElement,
+                        g = d.getElementsByTagName('body')[0],
+                        x = w.innerWidth || e.clientWidth || g.clientWidth,
+                        y = w.innerHeight || e.clientHeight || g.clientHeight;
+                    if (x <= 768) {
+                        window.location = '<?= $sm['config']['site_url']; ?>?page=login';
+                    }
+                };
+            }
+        <?php } ?>
+    </script>
+    <?php
+    function getSiteLangsLanding($start, $finish)
+    {
+        global $mysqli, $sm;
+        $ret = '';
+        $query = $mysqli->query("SELECT * FROM languages where visible = 1 ORDER BY id ASC LIMIT $start,$finish");
+        if ($query->num_rows > 1) {
+            while ($result = $query->fetch_object()) {
+                $ret .= '<li class="drop-menu-item"><a data-lang="' . $result->id . '" href="index.php?lang=' . $result->id . '">' . $result->name . '</a>
+            </li>';
+            }
+        }
+        return $ret;
+    }
+    $sm['genders'] = siteGenders($_SESSION['lang']);
+    $site_config = json_encode($sm['config']);
+    $site_theme = json_encode($sm['landing']);
+    $site_lang = json_encode($sm['lang']);
+    $filter_age = 0;
+    ?>
+    <script>
+        var url;
+        var mobile = false;
+        var softwareVersion = "<?php echo $sm['settings']['currentVersion']; ?>";
+        var site_config = <?php echo $site_config; ?>;
+        var site_lang = <?php echo $site_lang; ?>;
+        var site_theme = <?php echo $site_theme; ?>;
+
+        function request_source() {
+            return '<?php echo $sm['config']['ajax_path']; ?>';
+        }
+        function site_title() {
+            return '<?php echo $sm['config']['title']; ?>';
+        }
+        function theme_source() {
+            return '<?php echo $sm['config']['theme_url']; ?>';
+        }
+        function site_url() {
+            return '<?php echo $sm['config']['site_url']; ?>';
+        }
+        var current_user_id = 0;
+        var user_name;
+    </script>
+
+
+    <?php if (!empty($sm['plugins']['analytics']['ga_id'])) { ?>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async
+            src="https://www.googletagmanager.com/gtag/js?id=<?= $sm['plugins']['analytics']['ga_id']; ?>"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', '<?= $sm['plugins']['analytics']['ga_id']; ?>');
+        </script>
+    <?php } ?>
+
+    <?= $sm['plugins']['customHtml']['landing_header']; ?>
+
+    <style>
+        .cities-list {
+            display: inline-table;
+            width: 19%;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .cities-list {
+                width: 49%;
+            }
+        }
+
+        .nav-link {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo" style="display: flex; justify-content: center; align-items: center;">
+                    <a href="<?php echo $sm['config']['site_url']; ?>"><img src="<?= $sm['landing']['logo']['val']; ?>"
+                            alt="<?php echo $sm['config']['name']; ?> Logo"
+                            style="max-height: 40px; object-fit: contain;"></a>
+                </div>
+                <ul>
+                    <li><a href="<?= $sm['config']['site_url']; ?>?page=features" class="nav-link">FEATURES</a></li>
+                    <li><a href="<?= $sm['config']['site_url']; ?>?page=safety" class="nav-link">SAFETY</a></li>
+                    <li><a href="<?= $sm['config']['site_url']; ?>?page=download" class="nav-link">DOWNLOAD</a></li>
+                    <li><a href="<?= $sm['config']['site_url']; ?>?page=login" class="nav-link">LOGIN</a></li>
+                    <li><a href="<?= $sm['config']['site_url']; ?>?page=register" class="nav-link">SIGNUP NOW</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section class="hero">
+            <div class="hero-bg-text"><?php echo strtoupper($sm['config']['name']); ?></div>
+            <div class="hero-mask"></div>
+            <div class="hero-cards">
+                <div class="hero-card" style="transform: rotate(-12deg);">
+                    <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=400&h=500"
+                        alt="Roger" />
+                    <div class="hero-card-info">
+                        <div class="hero-card-status">
+                            <span class="online-dot"></span> ONLINE
+                        </div>
+                        <div class="hero-card-name">Roger <span class="hero-card-check">✔</span></div>
+                        <div class="hero-card-age">28 <span class="hero-card-age-sup">yo</span></div>
+                    </div>
+                </div>
+                <div class="hero-card" style="transform: rotate(6deg); z-index:2;">
+                    <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=400&h=500"
+                        alt="Esmeralda" />
+                    <div class="hero-card-info">
+                        <div class="hero-card-status">
+                            <span class="online-dot"></span> ONLINE
+                        </div>
+                        <div class="hero-card-name">Esmeralda <span class="hero-card-check">✔</span></div>
+                        <div class="hero-card-age">21 <span class="hero-card-age-sup">yo</span></div>
+                    </div>
+                </div>
+                <div class="hero-card" style="transform: rotate(10deg);">
+                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=400&h=500"
+                        alt="Phoveus" />
+                    <div class="hero-card-info">
+                        <div class="hero-card-status">
+                            <span class="online-dot"></span> ONLINE
+                        </div>
+                        <div class="hero-card-name">Phoveus <span class="hero-card-check">✔</span></div>
+                        <div class="hero-card-age">25 <span class="hero-card-age-sup">yo</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <main>
+            <div class="headline">
+                <span class="big-text"><?php echo strtoupper($sm['config']['name']); ?> APP</span>
+                <img src="<?php echo $sm['config']['theme_url_landing']; ?>/img/lips.png" alt="Lips" class="lips-img" />
+            </div>
+            <div class="script-text"><?php echo $sm['config']['name']; ?></div>
+            <div class="subtitle">A HEALTHY ALTERNATIVE FOR MEETING PEOPLE</div>
+            <div class="download-section">
+                <div>DOWNLOAD ON</div>
+                <div class="download-buttons">
+                    <a href="#" class="download-btn"><img src="https://cdn-icons-png.flaticon.com/512/0/747.png"
+                            alt="Apple"></a>
+                    <a href="#" class="download-btn"><img src="https://cdn-icons-png.flaticon.com/512/174/174836.png"
+                            alt="Android"></a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

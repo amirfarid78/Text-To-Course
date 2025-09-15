@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="<?php echo $sm['config']['theme_url']; ?>/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="theme-color" content="#fff">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="description" content="<?php echo $sm['seoLang']['landing'][2]['text']; ?>">
+  <meta name="keywords" content="<?php echo $sm['seoLang']['landing'][3]['text']; ?>">
+  <meta name="author" content="<?php echo $sm['config']['name']; ?>" />
+  <meta property="fb:app_id" content="<?= siteConfig('fb_app_id'); ?>" />
+
+  <meta property="og:title" content="<?php echo $sm['config']['title']; ?>" />
+  <meta property="og:site_name" content="<?php echo $sm['config']['name']; ?>">
+  <meta property="og:url" content="<?php echo $sm['config']['site_url']; ?>" />
+  <!-- <meta property="og:image" content="<?= $sm['theme']['logo']['val']; ?>" /> -->
+  <meta property="og:image" content="<?php echo $sm['config']['theme_url']; ?>/icons/social.jpeg">
+  <meta property="og:description" content="<?php echo $sm['config']['description']; ?>" />
+  <meta property="og:type" content="website" />
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="<?php echo $sm['config']['title']; ?>">
+  <link rel="apple-touch-icon" href="<?php echo $sm['config']['theme_url']; ?>/icons/Icon-192.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="<?php echo $sm['config']['theme_url']; ?>/icons/social.jpeg">
+  <meta name="twitter:title" content="<?php echo $sm['config']['title']; ?>">
+  <meta name="twitter:description" content="<?php echo $sm['config']['description']; ?>">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="<?= $sm['theme']['favicon']['val']; ?>">
+
+  <title><?php echo $sm['config']['name']; ?> | <?php echo $sm['seoLang']['landing'][1]['text']; ?></title>
+
+  <link rel="manifest" href="<?php echo $sm['config']['theme_url']; ?>/manifest.json">
+
+  <link rel="preload" href="<?php echo $sm['config']['theme_url']; ?>/main.dart.js" as="script">
+  <link rel="preload" href="<?= $sm['theme']['logo']['val']; ?>" as="image">
+  <link rel="preload" href="<?php echo $sm['config']['theme_url']; ?>/splash/img/light-background.png" as="image">
+
+
+
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $sm['plugins']['ipstack']['key']; ?>"></script>
+  <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+  <style>
+    .grecaptcha-badge {
+      visibility: hidden;
+    }
+  </style>
+   <meta name="google-signin-client_id" content="<?php echo $sm['plugins']['google']['key']; ?>.apps.googleusercontent.com">
+  <style id="splash-screen-style">
+    html {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      background-color: #ffffff;
+      background-image: url("<?php echo $sm['config']['theme_url']; ?>/splash/img/light-background.png");
+      background-size: 100% 100%;
+    }
+
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .contain {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .stretch {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .cover {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .bottom {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      -ms-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
+    }
+
+    .bottomLeft {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .bottomRight {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  </style>
+  <script id="splash-screen-script">
+    function removeSplashFromWeb() {
+      document.getElementById("splash")?.remove();
+      document.getElementById("splash-branding")?.remove();
+      document.body.style.background = "transparent";
+    }
+  </script>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+</head>
+
+<body>
+  <picture id="splash">
+    <source
+      srcset="<?= $sm['theme']['logo']['val']; ?> 1x, <?= $sm['theme']['logo']['val']; ?> 2x, <?= $sm['theme']['logo']['val']; ?> 3x, <?= $sm['theme']['logo']['val']; ?> 4x"
+      media="(prefers-color-scheme: light)">
+    <source
+      srcset="<?= $sm['theme']['logo']['val']; ?> 1x, <?= $sm['theme']['logo']['val']; ?> 2x, <?= $sm['theme']['logo']['val']; ?> 3x, <?= $sm['theme']['logo']['val']; ?> 4x"
+      media="(prefers-color-scheme: dark)">
+    <img class="center" aria-hidden="true" src="<?= $sm['theme']['logo']['val']; ?>"
+      alt="">
+  </picture>
+
+  <script>
+    (function (b, r, a, n, c, h, _, s, d, k) {
+      if (!b[n] || !b[n]._q) {
+        for (; s < _.length;) c(h, _[s++]);
+        d = r.createElement(a);
+        d.async = 1;
+        d.src = "https://cdn.branch.io/branch-latest.min.js";
+        k = r.getElementsByTagName(a)[0];
+        k.parentNode.insertBefore(d, k);
+        b[n] = h;
+      }
+    })(
+      window,
+      document,
+      "script",
+      "branch",
+      function (b, r) {
+        b[r] = function () {
+          b._q.push([r, arguments]);
+        };
+      },
+      { _q: [], _v: 1 },
+      "addListener banner closeBanner closeJourney data deepview deepviewCta first init link logout removeListener setBranchViewData setIdentity track trackCommerceEvent logEvent disableTracking getBrowserFingerprintId crossPlatformIds lastAttributedTouchData setAPIResponseCallback qrCode setRequestMetaData setAPIUrl getAPIUrl setDMAParamsForEEA".split(
+        " "
+      ),
+      0
+    );
+    branch.init("key_live_dBasDZFouSGnDEnBqjarofcjEEk5xeRU");
+  </script>
+
+  <script src="https://js.paystack.co/v1/inline.js" defer=""></script>
+  <script src="<?php echo $sm['config']['theme_url']; ?>/paystack_interop.js" defer=""></script>
+  <!-- <script src="iris-web-rtc_n450_w4220_0.8.6.js"></script> -->
+  <script src="<?php echo $sm['config']['theme_url']; ?>/flutter_bootstrap.js" defer=""></script>
+</body>
+
+</html>

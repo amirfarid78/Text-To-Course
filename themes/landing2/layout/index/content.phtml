@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title><?php echo $sm['seoLang']['landing'][1]['text']; ?></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="<?php echo $sm['seoLang']['landing'][2]['text']; ?>">
+  <meta name="keywords" content="<?php echo $sm['seoLang']['landing'][3]['text']; ?>">
+  <meta name="author" content="<?php echo $sm['config']['name']; ?>">
+  <link rel="icon" type="image/png" href="<?= $sm['landing']['favicon']['val']; ?>" sizes="32x32">
+  <!-- Bootstrap , fonts & icons  -->
+  <link rel="stylesheet"
+    href="<?php echo $sm['config']['theme_url_landing']; ?>/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo $sm['config']['theme_url_landing']; ?>/fonts/icon-font/css/style.css">
+  <link rel="stylesheet" href="<?php echo $sm['config']['theme_url_landing']; ?>/fonts/typography-font/typo.css">
+  <link rel="stylesheet" href="<?php echo $sm['config']['theme_url_landing']; ?>/fonts/fontawesome-5/css/all.css">
+  <!-- Plugin'stylesheets  -->
+  <link rel="stylesheet" href="<?php echo $sm['config']['theme_url_landing']; ?>/plugins/aos/aos.min.css">
+  <link rel="stylesheet"
+    href="<?php echo $sm['config']['theme_url_landing']; ?>/plugins/fancybox/jquery.fancybox.min.css">
+  <link rel="stylesheet"
+    href="<?php echo $sm['config']['theme_url_landing']; ?>/plugins/nice-select/nice-select.min.css">
+
+  <!-- Vendor stylesheets  -->
+  <link rel="stylesheet" href="<?php echo $sm['config']['theme_url_landing']; ?>/css/settings.css">
+  <link rel="stylesheet" href="<?php echo $sm['config']['theme_url_landing']; ?>/css/main.css">
+  <!-- Custom stylesheet -->
+  <link rel="stylesheet" href="<?php echo $sm['config']['theme_url_landing']; ?>/css/custom.css">
+
+  <link href="<?php echo $sm['config']['theme_url']; ?>/css/vendor/autocomplete.css" rel="stylesheet" type="text/css" />
+  <?php $fonts = getArrayDSelected('font', 'theme_preset_fonts', 'where preset = "' . $_SESSION['landingPreset'] . '"');
+  foreach ($fonts as $font) {
+    $f = $font['font'];
+    $f = str_replace(' ', '+', $f);
+    echo '<link href="https://fonts.googleapis.com/css?family=' . $f . '" rel="stylesheet" type="text/css"/>';
+  } ?>
+  <style id="themeData">
+    <?= getLandingAbsolutePage('styles'); ?>
+  </style>
+  <script type="text/javascript">
+    function inIframe() {
+      try {
+        return window.self !== window.top;
+      } catch (e) {
+        return true;
+      }
+    }
+    function detect_device() {
+      var w = window,
+        d = document,
+        e = d.documentElement,
+        g = d.getElementsByTagName('body')[0],
+        x = w.innerWidth || e.clientWidth || g.clientWidth,
+        y = w.innerHeight || e.clientHeight || g.clientHeight;
+      if (x <= 768) {
+        window.location = '<?= $sm['config']['site_url']; ?>';
+      }
+    }
+    if (inIframe() !== true) {
+      detect_device();
+      window.onresize = function () {
+        var w = window,
+          d = document,
+          e = d.documentElement,
+          g = d.getElementsByTagName('body')[0],
+          x = w.innerWidth || e.clientWidth || g.clientWidth,
+          y = w.innerHeight || e.clientHeight || g.clientHeight;
+        if (x <= 768) {
+          window.location = '<?= $sm['config']['site_url']; ?>?page=login';
+        }
+      };
+    }
+  </script>
+  <?php
+  function getSiteLangsLanding($start, $finish)
+  {
+    global $mysqli, $sm;
+    $ret = '';
+    $query = $mysqli->query("SELECT * FROM languages where visible = 1 ORDER BY id ASC LIMIT $start,$finish");
+    if ($query->num_rows > 1) {
+      while ($result = $query->fetch_object()) {
+        $ret .= '<li class="drop-menu-item"><a data-lang="' . $result->id . '" href="index.php?lang=' . $result->id . '">' . $result->name . '</a>
+            </li>';
+      }
+    }
+    return $ret;
+  }
+  $sm['genders'] = siteGenders($_SESSION['lang']);
+  $site_config = json_encode($sm['config']);
+  $site_theme = json_encode($sm['landing']);
+  $site_lang = json_encode($sm['lang']);
+  $filter_age = 0;
+  ?>
+  <script type="text/javascript">
+    var url;
+    var mobile = false;
+    var softwareVersion = "<?php echo $sm['settings']['currentVersion']; ?>";
+    var site_config = <?php echo $site_config; ?>;
+    var site_lang = <?php echo $site_lang; ?>;
+    var site_theme = <?php echo $site_theme; ?>;
+    function request_source() {
+      return '<?php echo $sm['config']['ajax_path']; ?>';
+    }
+    function site_title() {
+      return '<?php echo $sm['config']['title']; ?>';
+    }
+    function theme_source() {
+      return '<?php echo $sm['config']['theme_url']; ?>';
+    }
+    function site_url() {
+      return '<?php echo $sm['config']['site_url']; ?>';
+    }
+    var current_user_id = 0;
+    var user_name;
+  </script>
+
+
+  <?php if (!empty($sm['plugins']['analytics']['ga_id'])) { ?>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?= $sm['plugins']['analytics']['ga_id']; ?>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', '<?= $sm['plugins']['analytics']['ga_id']; ?>');
+    </script>
+  <?php } ?>
+
+  <?= $sm['plugins']['customHtml']['landing_header']; ?>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .rainbow-text {
+      background: linear-gradient(90deg, red, yellow, green, blue, violet);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .rainbow-button {
+      background: linear-gradient(90deg,
+          #FF3B3B 0%,
+          #FF8C00 20%,
+          #FFD700 40%,
+          #00C49A 60%,
+          #1E90FF 80%,
+          #8A2BE2 100%);
+      color: white;
+      box-shadow: 0 8px 60px rgba(255, 59, 59, 0.6),
+        0 4px 30px rgba(30, 144, 255, 0.5);
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-800">
+  <header class="flex flex-col sm:flex-row justify-between items-center px-6 sm:px-12">
+    <div class="flex items-end justify-end gap-2 sm:gap-4 mb-4 sm:mb-0">
+      <div class="overflow-hidden flex items-end justify-center">
+        <img src="<?= $sm['landing']['logo']['val']; ?>" alt="<?php echo $sm['seoLang']['landing'][1]['text']; ?> Logo"
+          class="w-32 h-12 sm:w-36 sm:h-18 object-contain mx-auto" />
+      </div>
+    </div>
+    <nav class="flex flex-wrap justify-center gap-4 sm:gap-12 items-center text-base sm:text-lg md:text-xl font-medium">
+      <a href="<?= $sm['config']['site_url']; ?>" class="text-gray-600 hover:text-black">Home</a>
+      <a href="#" class="text-gray-600 hover:text-black">Features</a>
+      <a href="#" class="text-gray-600 hover:text-black">Download</a>
+      <a href="<?= $sm['config']['site_url']; ?>?page=login" class="text-gray-600 hover:text-black">Login</a>
+      <a href="<?= $sm['config']['site_url']; ?>?page=register" class="rainbow-text font-bold">Signup Now</a>
+    </nav>
+  </header>
+
+  <main
+    class="px-6 sm:px-12 pt-8 sm:pt-16 pb-16 sm:pb-32 flex flex-col lg:flex-row-reverse items-start justify-between gap-8 sm:gap-16">
+    <!-- Image Cards Section -->
+    <section class="w-full lg:w-1/2 flex justify-center items-start">
+      <div class="relative w-full max-w-s min-h-[300px] sm:min-h-[400px]">
+        <!-- Card 1: Top Left -->
+        <div class="absolute top-0 left-0 z-10 w-[50%] aspect-[3/4] rotate-[-6deg]">
+          <div class="bg-fuchsia-500 text-white rounded-[2rem] shadow-xl h-full flex flex-col p-2">
+            <img
+              src="https://media.istockphoto.com/id/1337218197/photo/cheerful-gay-couple-embracing-each-other-in-a-studio.jpg?s=612x612&w=0&k=20&c=Gdu8FNffljVLnkHqAQ0vSqJujT2A_WHVheyVR-b0X3s="
+              class="rounded-[1.5rem] w-full object-cover h-[85%]" />
+            <p class="text-center mt-4 text-base sm:text-lg md:text-xl lg:text-xl font-normal text-white">Find your love
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2: Middle Center -->
+        <div class="absolute top-[25%] left-[30%] z-0 w-[50%] aspect-[3/4] rotate-[4deg]">
+          <div class="bg-yellow-400 text-white rounded-[2rem] shadow-lg h-full flex flex-col p-2">
+            <img
+              src="https://thumbs.dreamstime.com/b/friends-gay-lesbian-women-happy-piggyback-fun-beach-summer-lgbtq-dating-trust-happy-friends-gay-258693431.jpg"
+              class="rounded-[1.5rem] w-full object-cover h-[85%]" />
+            <p class="text-center mt-4 text-base sm:text-lg md:text-xl lg:text-xl font-normal text-white">Meet People
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3: Bottom Right -->
+        <div class="absolute top-[50%] right-0 z-[-1] w-[50%] aspect-[3/4] rotate-[-4deg]">
+          <div class="bg-green-400 text-white rounded-[2rem] shadow-md h-full flex flex-col p-2">
+            <img
+              src="https://ivf-success.com/wp-content/uploads/2018/08/hian-oliveira-614747-unsplash-e1736348935676-1024x890.jpg"
+              class="rounded-[1.5rem] w-full object-cover h-[85%]" />
+            <p class="text-center mt-4 text-base sm:text-lg md:text-xl lg:text-xl font-normal text-white">Made with Love
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-[320px] sm:pt-[420px]"></div>
+      </div>
+    </section>
+
+    <!-- Text Section -->
+    <section class="lg:w-1/2">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2">Find your love</h1>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-9xl font-black leading-tight mb-4">
+        By being<br />
+        <span class="rainbow-text">Yourself</span>
+      </h2>
+      <p class="text-gray-600 text-base sm:text-lg md:text-xl mb-8 w-full sm:w-2/3">
+        We designed a platform for people of LGBT to find their love without being judged
+      </p>
+      <button
+        class="rainbow-button px-8 sm:px-16 py-2 rounded-full font-semibold hover:scale-105 transition text-base sm:text-lg md:text-xl"
+        style="width: 60%">
+        FIND YOUR LOVE
+      </button>
+
+      <img src="<?php echo $sm['config']['theme_url_landing']; ?>/img/line-arrow.png"
+        alt="Arrow pointing to image cards"
+        class="mt-4 mb-8 hidden lg:block w-1/4 ml-auto absolute z-50 filter brightness-0"
+        style="top: 50%; right: 48%;" />
+
+      <!-- Features Section -->
+      <div class="flex flex-wrap justify-between items-start mt-12 sm:mt-20 gap-4 sm:gap-8">
+        <div class="flex flex-col w-full sm:w-[30%]">
+          <div class="flex items-center space-x-2 sm:space-x-4 mb-2">
+            <img src="https://img.icons8.com/color/48/hearts.png" class="w-12 h-12 sm:w-16 sm:h-16" />
+            <h4 class="font-bold text-lg sm:text-xl md:text-2xl">100k+ Members</h4>
+          </div>
+          <p class="text-sm sm:text-base md:text-lg text-gray-500">Thousands of people are using happymatch</p>
+        </div>
+        <div class="flex flex-col w-full sm:w-[30%]">
+          <div class="flex items-center space-x-2 sm:space-x-4 mb-2">
+            <img src="https://img.icons8.com/color/48/hearts.png" class="w-12 h-12 sm:w-16 sm:h-16" />
+            <h4 class="font-bold text-lg sm:text-xl md:text-2xl">Smart Match AI</h4>
+          </div>
+          <p class="text-sm sm:text-base md:text-lg text-gray-500">Best match via smart algorithm</p>
+        </div>
+        <div class="flex flex-col w-full sm:w-[30%]">
+          <div class="flex items-center space-x-2 sm:space-x-4 mb-2">
+            <img src="https://img.icons8.com/color/48/hearts.png" class="w-12 h-12 sm:w-16 sm:h-16" />
+            <h4 class="font-bold text-lg sm:text-xl md:text-2xl">Perfect Match</h4>
+          </div>
+          <p class="text-sm sm:text-base md:text-lg text-gray-500">10k+ happy people on platform</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

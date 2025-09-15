@@ -1,0 +1,8 @@
+{
+  "total": 1,
+  "updates": "\n<div style=\"background-color: #fff; padding: 6px; margin: 3px; border: 1px #ddd solid; font-size: 14px\">\n<div style=\"float: left\">\n</div>\n<div style=\"float: left; margin-top: 7px; text-align: left;width:92%;margin-left:5px\">\nVersion 4.0 <span data-version=\"4.0\" style=\"font-weight:bold;margin-left:40px;float:right;color:#48BA16;display:none\">INSTALLED</span><span data-installing=\"4.0\" style=\"font-weight:bold;margin-left:40px;float:right;color:#999;display:none\">INSTALLING</span>\n</div>\n<div style=\"clear: both\"></div>\n</div>\n",
+  "version": [4.0],
+  "licenseType": "R",
+  "plugins": ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+  "total_plugins": 9
+}

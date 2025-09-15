@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head data-llama-editable="true" data-llama-id="0">
+    <meta charset="utf-8" data-llama-editable="true" data-llama-id="1" />
+    <meta content="width=device-width, initial-scale=1.0" data-llama-editable="true" data-llama-id="2"
+        name="viewport" />
+    <title>
+        <?php echo $sm['seoLang']['landing'][1]['text']; ?>
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="<?php echo $sm['seoLang']['landing'][2]['text']; ?>">
+    <meta name="keywords" content="<?php echo $sm['seoLang']['landing'][3]['text']; ?>">
+    <meta name="author" content="<?php echo $sm['config']['name']; ?>">
+    <link rel="icon" type="image/png" href="<?= $sm['landing']['favicon']['val']; ?>" sizes="32x32">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript">
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+        function detect_device() {
+            var w = window,
+                d = document,
+                e = d.documentElement,
+                g = d.getElementsByTagName('body')[0],
+                x = w.innerWidth || e.clientWidth || g.clientWidth,
+                y = w.innerHeight || e.clientHeight || g.clientHeight;
+            if (x <= 768) {
+                window.location = '<?= $sm['config']['site_url']; ?>';
+            }
+        }
+        <?php if ($sm['landing']['show_mobile']['val'] == 'No') { ?>
+            if (inIframe() !== true) {
+                detect_device();
+                window.onresize = function () {
+                    var w = window,
+                        d = document,
+                        e = d.documentElement,
+                        g = d.getElementsByTagName('body')[0],
+                        x = w.innerWidth || e.clientWidth || g.clientWidth,
+                        y = w.innerHeight || e.clientHeight || g.clientHeight;
+                    if (x <= 768) {
+                        window.location = '<?= $sm['config']['site_url']; ?>?page=login';
+                    }
+                };
+            }
+        <?php } ?>
+    </script>
+    <?php if (!empty($sm['plugins']['analytics']['ga_id'])) { ?>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async
+            src="https://www.googletagmanager.com/gtag/js?id=<?= $sm['plugins']['analytics']['ga_id']; ?>"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', '<?= $sm['plugins']['analytics']['ga_id']; ?>');
+        </script>
+    <?php } ?>
+    <style data-llama-editable="true" data-llama-id="5">
+        /* For scroll snapping and horizontal-only scrolling */
+        #testimonialSlider {
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Hide scrollbar for testimonial slider */
+        #testimonialSlider {
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
+
+        #testimonialSlider::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera */
+        }
+
+        .testimonial-card {
+            scroll-snap-align: center;
+        }
+
+        /* Center the navigation arrows */
+        #prevBtn,
+        #nextBtn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        #prevBtn {
+            left: -20px;
+        }
+
+        #nextBtn {
+            right: -20px;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen" data-llama-editable="true" data-llama-id="6" style="cursor: crosshair;">
+    <!-- Header / Navigation -->
+    <header class="absolute top-0 left-0 w-full py-4 px-6 z-30 flex items-center justify-between text-white"
+        data-llama-editable="true" data-llama-id="7">
+        <div class="flex items-center h-full space-x-6" data-llama-editable="true" data-llama-id="8">
+            <a class="flex items-center h-full" data-llama-editable="true" data-llama-id="9"
+                href="<?= $sm['config']['site_url']; ?>">
+                <img alt="Logo" class="w-32 h-16 object-contain" data-llama-editable="true" data-llama-id="10"
+                    src="<?= $sm['landing']['logo']['val']; ?>" />
+            </a>
+            <nav class="hidden md:flex space-x-6 items-center h-full" data-llama-editable="true" data-llama-id="11">
+                <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="12" href="#">Products</a>
+                <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="13" href="#">Learn</a>
+                <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="14" href="#">Safety</a>
+                <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="15" href="#">Support</a>
+                <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="16" href="#">Download</a>
+                <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="17" href="#">Gift Cards</a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4 h-full" data-llama-editable="true" data-llama-id="18">
+            <button class="hover:text-pink-500 font-bold flex items-center space-x-2" data-llama-editable="true"
+                data-llama-id="19">
+                <svg class="h-5 w-5" data-llama-editable="true" data-llama-id="20" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        data-llama-editable="true" data-llama-id="21" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"></path>
+                </svg>
+                <span data-llama-editable="true" data-llama-id="22">Language</span>
+            </button>
+            <a class="bg-white text-[#FF6B81] text-lg px-6 py-3 rounded-full hover:opacity-90"
+                data-llama-editable="true" data-llama-id="23" href="<?= $sm['config']['site_url']; ?>?page=login">
+                <?= $sm['lang'][1]['text']; ?>
+            </a>
+        </div>
+    </header>
+    <!-- Hero Section -->
+    <section class="relative h-screen bg-cover bg-center bg-no-repeat" data-llama-editable="true" data-llama-id="24">
+        <video playsinline autoplay muted loop data-video class="absolute inset-0 w-full h-full object-cover z-0">
+            <source src="<?= $sm['landing']['bg_video']['val']; ?>" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black opacity-60 z-10" data-llama-editable="true" data-llama-id="25"></div>
+        <div class="relative z-20 flex flex-col items-center justify-center text-center text-white h-full px-4"
+            data-llama-editable="true" data-llama-id="26">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6" data-llama-editable="true" data-llama-id="27">Swipe Right®
+            </h1>
+            <button class="bg-pink-500 hover:bg-pink-600 text-white text-lg px-6 py-3 rounded-full"
+                data-llama-editable="true" data-llama-id="28"
+                onclick="window.location.href='<?= $sm['config']['site_url']; ?>?page=register';">
+                Create account
+            </button>
+        </div>
+    </section>
+    <!-- Testimonials / Slider Section -->
+    <section class="py-16 bg-white" data-llama-editable="true" data-llama-id="29">
+        <div class="max-w-7xl mx-auto px-4" data-llama-editable="true" data-llama-id="30">
+            <div class="relative" data-llama-editable="true" data-llama-id="31">
+                <!-- Left Navigation Arrow -->
+                <button
+                    class="hidden md:block bg-[#FF6B81] h-10 w-10 flex items-center justify-center rounded-full hover:opacity-90 z-10"
+                    data-llama-editable="true" data-llama-id="32" id="prevBtn">
+                    <svg class="h-5 w-5 text-white mx-auto" data-llama-editable="true" data-llama-id="33" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 19l-7-7 7-7" data-llama-editable="true" data-llama-id="34" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </button>
+                <!-- Slider Container -->
+                <div class="overflow-x-auto snap-x snap-mandatory scroll-smooth" data-llama-editable="true"
+                    data-llama-id="35" id="testimonialSlider">
+                    <div class="flex w-max space-x-6 cursor-grab snap-x snap-mandatory scroll-smooth overflow-y-hidden"
+                        data-llama-editable="true" data-llama-id="36">
+                        <!-- Testimonial Card 1 -->
+                        <div class="min-w-[300px] border rounded-lg shadow p-6 relative bg-gray-50 testimonial-card snap-center"
+                            data-llama-editable="true" data-llama-id="37">
+                            <span class="text-9xl text-gray-200 absolute top-2 right-2" data-llama-editable="true"
+                                data-llama-id="38">"</span>
+                            <figcaption class="text-xl mb-2 font-semibold" data-llama-editable="true"
+                                data-llama-id="39">
+                                Shannon &amp; Julian
+                            </figcaption>
+                            <hr class="border-gray-300 mb-3" data-llama-editable="true" data-llama-id="40" />
+                            <blockquote class="text-gray-600 text-sm" data-llama-editable="true" data-llama-id="41">
+                                <p data-llama-editable="true" data-llama-id="42">
+                                    We met on
+                                    <?php echo $sm['config']['name']; ?> and never looked back. It was love at first
+                                    swipe!
+                                </p>
+                            </blockquote>
+                        </div>
+                        <!-- Testimonial Card 2 -->
+                        <div class="min-w-[300px] border rounded-lg shadow p-6 relative bg-gray-50 testimonial-card snap-center"
+                            data-llama-editable="true" data-llama-id="43">
+                            <span class="text-9xl text-gray-200 absolute top-2 right-2" data-llama-editable="true"
+                                data-llama-id="44">"</span>
+                            <figcaption class="text-xl mb-2 font-semibold" data-llama-editable="true"
+                                data-llama-id="45">
+                                Courtney &amp; Miranda
+                            </figcaption>
+                            <hr class="border-gray-300 mb-3" data-llama-editable="true" data-llama-id="46" />
+                            <blockquote class="text-gray-600 text-sm" data-llama-editable="true" data-llama-id="47">
+                                <p data-llama-editable="true" data-llama-id="48">
+                                    <?php echo $sm['config']['name']; ?> brought us together and our story just keeps
+                                    getting better.
+                                </p>
+                            </blockquote>
+                        </div>
+                        <!-- Testimonial Card 3 -->
+                        <div class="min-w-[300px] border rounded-lg shadow p-6 relative bg-gray-50 testimonial-card snap-center"
+                            data-llama-editable="true" data-llama-id="49">
+                            <span class="text-9xl text-gray-200 absolute top-2 right-2" data-llama-editable="true"
+                                data-llama-id="50">"</span>
+                            <figcaption class="text-xl mb-2 font-semibold" data-llama-editable="true"
+                                data-llama-id="51">
+                                Alex &amp; Sam
+                            </figcaption>
+                            <hr class="border-gray-300 mb-3" data-llama-editable="true" data-llama-id="52" />
+                            <blockquote class="text-gray-600 text-sm" data-llama-editable="true" data-llama-id="53">
+                                <p data-llama-editable="true" data-llama-id="54">
+                                    Swipe right and let destiny take the wheel – just like we did!
+                                </p>
+                            </blockquote>
+                        </div>
+                        <!-- Testimonial Card 4 -->
+                        <div
+                            class="min-w-[300px] border rounded-lg shadow p-6 relative bg-gray-50 testimonial-card snap-center">
+                            <span class="text-9xl text-gray-200 absolute top-2 right-2">"</span>
+                            <figcaption class="text-xl mb-2 font-semibold">Jordan &amp; Taylor</figcaption>
+                            <hr class="border-gray-300 mb-3" />
+                            <blockquote class="text-gray-600 text-sm">
+                                <p>
+                                    We matched, we met, and now we're inseparable. Thank you,
+                                    <?php echo $sm['config']['name']; ?>!
+                                </p>
+                            </blockquote>
+                        </div>
+                        <!-- Testimonial Card 5 -->
+                        <div
+                            class="min-w-[300px] border rounded-lg shadow p-6 relative bg-gray-50 testimonial-card snap-center">
+                            <span class="text-9xl text-gray-200 absolute top-2 right-2">"</span>
+                            <figcaption class="text-xl mb-2 font-semibold">Morgan &amp; Casey</figcaption>
+                            <hr class="border-gray-300 mb-3" />
+                            <blockquote class="text-gray-600 text-sm">
+                                <p>
+                                    Never thought a swipe could change my life, but here we are!
+                                </p>
+                            </blockquote>
+                        </div>
+                        <!-- Testimonial Card 6 -->
+                        <div
+                            class="min-w-[300px] border rounded-lg shadow p-6 relative bg-gray-50 testimonial-card snap-center">
+                            <span class="text-9xl text-gray-200 absolute top-2 right-2">"</span>
+                            <figcaption class="text-xl mb-2 font-semibold">Jamie &amp; Riley</figcaption>
+                            <hr class="border-gray-300 mb-3" />
+                            <blockquote class="text-gray-600 text-sm">
+                                <p>
+                                    From first message to forever, all thanks to
+                                    <?php echo $sm['config']['name']; ?>.
+                                </p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Navigation Arrow -->
+                <button
+                    class="hidden md:block bg-[#FF6B81] h-10 w-10 flex items-center justify-center rounded-full hover:opacity-90 z-10"
+                    data-llama-editable="true" data-llama-id="55" id="nextBtn">
+                    <svg class="h-5 w-5 text-white mx-auto" data-llama-editable="true" data-llama-id="56" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 5l7 7-7 7" data-llama-editable="true" data-llama-id="57" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Scroll Indicators -->
+            <div class="flex justify-center space-x-2 mt-4" data-llama-editable="true" data-llama-id="58"
+                id="indicators">
+                <button class="w-3 h-3 rounded-full bg-[#FF6B81]" data-index="0" data-llama-editable="true"
+                    data-llama-id="59"></button>
+                <button class="w-3 h-3 rounded-full bg-gray-300" data-index="1" data-llama-editable="true"
+                    data-llama-id="60"></button>
+                <button class="w-3 h-3 rounded-full bg-gray-300" data-index="2" data-llama-editable="true"
+                    data-llama-id="61"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8 mt-auto" data-llama-editable="true" data-llama-id="66">
+        <div class="max-w-7xl mx-auto px-4" data-llama-editable="true" data-llama-id="67">
+            <!-- Footer Columns -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8" data-llama-editable="true" data-llama-id="68">
+                <!-- Legal -->
+                <div data-llama-editable="true" data-llama-id="69">
+                    <h3 class="font-bold mb-2" data-llama-editable="true" data-llama-id="70">Legal</h3>
+                    <ul class="space-y-1 text-sm text-gray-600" data-llama-editable="true" data-llama-id="71">
+                        <li data-llama-editable="true" data-llama-id="72">
+                            <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="73"
+                                href="#">Privacy</a>
+                        </li>
+                        <li data-llama-editable="true" data-llama-id="74">
+                            <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="75"
+                                href="#">Terms</a>
+                        </li>
+                        <li data-llama-editable="true" data-llama-id="76">
+                            <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="77"
+                                href="#">Cookies</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Careers -->
+                <div data-llama-editable="true" data-llama-id="78">
+                    <h3 class="font-bold mb-2" data-llama-editable="true" data-llama-id="79">Careers</h3>
+                    <ul class="space-y-1 text-sm text-gray-600" data-llama-editable="true" data-llama-id="80">
+                        <li data-llama-editable="true" data-llama-id="81">
+                            <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="82"
+                                href="#">Jobs</a>
+                        </li>
+                        <li data-llama-editable="true" data-llama-id="83">
+                            <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="84"
+                                href="#">Internships</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Social -->
+                <div data-llama-editable="true" data-llama-id="85">
+                    <h3 class="font-bold mb-2" data-llama-editable="true" data-llama-id="86">Social</h3>
+                    <ul class="space-y-1 text-sm text-gray-600" data-llama-editable="true" data-llama-id="87">
+                        <li data-llama-editable="true" data-llama-id="88">
+                            <a class="flex items-center space-x-2 hover:text-pink-500" data-llama-editable="true"
+                                data-llama-id="89" href="#">
+                                <svg class="w-4 h-4 fill-current" data-llama-editable="true" data-llama-id="90"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M22,12A10,10,0,1,0,10,22V14H7v-3h3V8.5A4,4,0,0,1,14,5h3v3H14a1,1,0,0,0-1,1V11h4l-1,3H13v8A10,10,0,0,0,22,12Z"
+                                        data-llama-editable="true" data-llama-id="91"></path>
+                                </svg>
+                                <span data-llama-editable="true" data-llama-id="92">Instagram</span>
+                            </a>
+                        </li>
+                        <li data-llama-editable="true" data-llama-id="93">
+                            <a class="flex items-center space-x-2 hover:text-pink-500" data-llama-editable="true"
+                                data-llama-id="94" href="#">
+                                <svg class="w-4 h-4 fill-current" data-llama-editable="true" data-llama-id="95"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0C5.37263 0 0 5.37263 0 12C0 17.9902 4.38883 23.1273 10.125 24V15.5625H7.078125V12H10.125V9.35625C10.125 6.34875 11.916 4.6875 14.6588 4.6875C15.966 4.6875 17.3438 4.92188 17.3438 4.92188V7.89062H15.8594C14.3981 7.89062 13.875 8.835 13.875 9.79875V12H17.2031L16.7188 15.5625H13.875V24C19.6112 23.1273 24 17.9902 24 12C24 5.37263 18.6274 0 12 0Z"
+                                        data-llama-editable="true" data-llama-id="96"></path>
+                                </svg>
+                                <span data-llama-editable="true" data-llama-id="97">Facebook</span>
+                            </a>
+                        </li>
+                        <li data-llama-editable="true" data-llama-id="98">
+                            <a class="flex items-center space-x-2 hover:text-pink-500" data-llama-editable="true"
+                                data-llama-id="99" href="#">
+                                <svg class="w-4 h-4 fill-current" data-llama-editable="true" data-llama-id="100"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.608 1.794-1.574 2.163-2.723-.949.564-2.005.974-3.127 1.195-.897-.959-2.177-1.555-3.594-1.555-2.723 0-4.928 2.205-4.928 4.928 0 .386.044.762.127 1.124-4.094-.205-7.725-2.165-10.148-5.144-.424.728-.666 1.577-.666 2.475 0 1.708.87 3.213 2.191 4.096-.807-.026-1.566-.247-2.228-.616v.062c0 2.385 1.693 4.374 3.946 4.828-.413.112-.848.171-1.296.171-.317 0-.626-.031-.928-.088.631 1.953 2.445 3.376 4.604 3.416-1.68 1.319-3.809 2.105-6.102 2.105-.396 0-.787-.023-1.175-.069 2.179 1.397 4.768 2.215 7.548 2.215 9.057 0 14.01-7.496 14.01-13.986 0-.21 0-.423-.015-.635.962-.695 1.8-1.562 2.46-2.549z"
+                                        data-llama-editable="true" data-llama-id="101"></path>
+                                </svg>
+                                <span data-llama-editable="true" data-llama-id="102">Twitter</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- More Links -->
+                <div data-llama-editable="true" data-llama-id="103">
+                    <h3 class="font-bold mb-2" data-llama-editable="true" data-llama-id="104">More</h3>
+                    <ul class="space-y-1 text-sm text-gray-600" data-llama-editable="true" data-llama-id="105">
+                        <li data-llama-editable="true" data-llama-id="106">
+                            <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="107"
+                                href="#">Blog</a>
+                        </li>
+                        <li data-llama-editable="true" data-llama-id="108">
+                            <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="109"
+                                href="#">About</a>
+                        </li>
+                        <li data-llama-editable="true" data-llama-id="110">
+                            <a class="hover:text-pink-500" data-llama-editable="true" data-llama-id="111"
+                                href="#">Press</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Get the App Section -->
+            <div class="mb-8" data-llama-editable="true" data-llama-id="112">
+                <div class="flex items-center space-x-4" data-llama-editable="true" data-llama-id="113">
+                    <h2 class="text-2xl font-bold text-gray-700" data-llama-editable="true" data-llama-id="114">Get The
+                        App</h2>
+                    <a data-llama-editable="true" data-llama-id="115" href="https://go.tinder.com/web-ios-download">
+                        <img alt="App Store" class="h-12" data-llama-editable="true" data-llama-id="116"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/1280px-Download_on_the_App_Store_Badge.svg.png" />
+                    </a>
+                    <a data-llama-editable="true" data-llama-id="117" href="https://go.tinder.com/web-android-download">
+                        <img alt="Google Play" class="h-12" data-llama-editable="true" data-llama-id="118"
+                            src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" />
+                    </a>
+                </div>
+            </div>
+            <!-- Marketing Text / Main Body Content -->
+            <section class="bg-white py-8" data-llama-editable="true" data-llama-id="62">
+                <div class="max-w-7xl mx-auto text-gray-600 space-y-4" data-llama-editable="true" data-llama-id="63">
+                    <p data-llama-editable="true" data-llama-id="64">
+                        Single people, listen up: if you're looking for love, excitement, or just a new adventure,
+                        <?php echo $sm['config']['name']; ?> has
+                        something for everyone. With millions of users worldwide, you're bound to find that spark!
+                    </p>
+                    <p data-llama-editable="true" data-llama-id="65">
+                        There really is something for everyone on
+                        <?php echo $sm['config']['name']; ?>. From exciting first dates to long term
+                        relationships,
+                        our
+                        app creates the perfect environment to meet your match, wherever you are.
+                    </p>
+                </div>
+            </section>
+            <!-- Copyright and Footer Links -->
+            <div class="border-t border-gray-200 pt-4 mt-4 flex items-center justify-between" data-llama-editable="true"
+                data-llama-id="119">
+                <div class="flex space-x-4" data-llama-editable="true" data-llama-id="120">
+                    <a class="text-sm text-gray-600 hover:text-pink-500" data-llama-editable="true" data-llama-id="121"
+                        href="#">FAQ</a>
+                    <a class="text-sm text-gray-600 hover:text-pink-500" data-llama-editable="true" data-llama-id="122"
+                        href="#">Safety Tips</a>
+                    <a class="text-sm text-gray-600 hover:text-pink-500" data-llama-editable="true" data-llama-id="123"
+                        href="#">Terms</a>
+                    <a class="text-sm text-gray-600 hover:text-pink-500" data-llama-editable="true" data-llama-id="124"
+                        href="#">Cookie Policy</a>
+                    <a class="text-sm text-gray-600 hover:text-pink-500" data-llama-editable="true" data-llama-id="125"
+                        href="#">Privacy Settings</a>
+                </div>
+                <p class="text-sm text-gray-500" data-llama-editable="true" data-llama-id="126">
+                    © 2025
+                    <?php echo $sm['config']['name']; ?>, All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script data-llama-editable="true" data-llama-id="127">
+        document.addEventListener('DOMContentLoaded', function () {
+            const slider = document.getElementById('testimonialSlider');
+            const sliderContainer = slider.querySelector('div');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const indicators = document.querySelectorAll('#indicators button');
+            const cards = Array.from(sliderContainer.children);
+            let currentIndex = 0;
+            const cardSpacing = 24; // approximate spacing in px (for space-x-6)
+
+            // Calculate the width of each card including margin
+            const getCardWidth = () => {
+                if (cards.length === 0) return 0;
+                const card = cards[0];
+                const style = window.getComputedStyle(card);
+                const width = card.offsetWidth;
+                const marginRight = parseInt(style.marginRight) || cardSpacing;
+                return width + marginRight;
+            };
+
+            function scrollToIndex(index) {
+                if (index < 0) index = 0;
+                if (index >= cards.length) index = cards.length - 1;
+
+                const cardWidth = getCardWidth();
+                const scrollPosition = index * cardWidth;
+
+                slider.scrollTo({
+                    left: scrollPosition,
+                    behavior: 'smooth'
+                });
+
+                updateIndicators(index);
+            }
+
+            function updateIndicators(index) {
+                currentIndex = index;
+
+                // Only update the first 3 indicators if we have them
+                const maxIndicators = Math.min(indicators.length, 3);
+
+                for (let i = 0; i < maxIndicators; i++) {
+                    if (i === index) {
+                        indicators[i].classList.remove('bg-gray-300');
+                        indicators[i].classList.add('bg-[#FF6B81]');
+                    } else {
+                        indicators[i].classList.remove('bg-[#FF6B81]');
+                        indicators[i].classList.add('bg-gray-300');
+                    }
+                }
+            }
+
+            // Next button click handler
+            nextBtn.addEventListener('click', function () {
+                currentIndex = Math.min(currentIndex + 1, cards.length - 1);
+                scrollToIndex(currentIndex);
+            });
+
+            // Previous button click handler
+            prevBtn.addEventListener('click', function () {
+                currentIndex = Math.max(currentIndex - 1, 0);
+                scrollToIndex(currentIndex);
+            });
+
+            // Indicator button click handlers
+            indicators.forEach((indicator, idx) => {
+                indicator.addEventListener('click', function () {
+                    scrollToIndex(idx);
+                });
+            });
+
+            // Update indicators on scroll
+            slider.addEventListener('scroll', function () {
+                const cardWidth = getCardWidth();
+                if (cardWidth === 0) return;
+
+                const index = Math.round(slider.scrollLeft / cardWidth);
+                if (index !== currentIndex) {
+                    updateIndicators(index);
+                }
+            });
+
+            // Initialize
+            updateIndicators(0);
+        });
+    </script>
+    <!-- This model is for viewing historical contents of the page and the prompts that changed it -->
+    <!-- Side panel for the Llama Bot, includes the html and javascript for managing it -->
+    <!-- Email confirmation dialog -->
+    <!-- Timeline Overlay -->
+    <!-- Existing floating toolbar -->
+    <!-- Add this new div for the custom context menu -->
+    <!-- Feedback Modal -->
+    <!--Put your analytics code here for Google Analytics, Facebook Pixels, etc.-->
+</body>
+
+</html>

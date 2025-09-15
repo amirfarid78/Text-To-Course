@@ -1,0 +1,41 @@
+# macOS system files
+.DS_Store
+
+# IDE and editor files
+.vscode/
+
+# Docker related files
+Dockerfile
+.dockerignore
+
+# Ignore .idx directory
+.idx/
+
+
+# Environment files
+.env
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Build directories
+/build/
+/dist/
+
+# Local development files
+*.local
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
