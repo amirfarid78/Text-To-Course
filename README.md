@@ -12,5 +12,5 @@ Razorpay - Free
 Render.com - Free
 Firebase Hosting (Optional) - Free
 Any Other Web Hosting (Optional) - Paid
-
+<h1> new version coming soon </h1>
 
