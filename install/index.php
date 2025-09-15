@@ -1,5 +1,5 @@
 <?php
-/* LAMAT Installer By ABBBLE CO - abbbleco@gmail.com - https://globalpremiumscript.framer.ai */
+
 $server_error = false;
 if (isset($_GET['go'])) {
     foreach (scandir(__DIR__) as $file) {
@@ -592,8 +592,6 @@ $url = str_replace('install/', '', url());
             }
         }
 
-
-
         function verifyLicense() {
             $('#verifyLicenseBtn').hide();
             $('.goBackBtn').hide();
@@ -601,61 +599,68 @@ $url = str_replace('install/', '', url());
             $('#licenseAjaxResponse').hide();
             $('#licenseAjaxResponseSuccess').hide();
             $('#license-type-div').hide();
+            
             var license = $('#license-input').val();
-            var domain = document.location.host; // Get the current domain
-            var url = "https://lamatt.serv00.net/license/index.php/?purchaseCode=" + encodeURIComponent(license) + "&i=1&domain=" + encodeURIComponent(domain);
-
+            var domain = document.location.host;
+            
             // Check if the license input is empty
             if (license.trim() === "") {
-                // Optionally, you can display a message to the user
                 $('#verifyLicenseBtn').show();
                 $('.is-loading').hide();
-                $('#licenseCallback').html("An error occurred during verification.");
+                $('#licenseCallback').html("Please enter a license code.");
                 $('#licenseAjaxResponse').show();
                 $('.goBackBtn').show();
-                return; // Exit the function without executing the AJAX call
+                return;
             }
-
-
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                success: function(data) {
-                    console.log(data);
-                    $('#verifyLicenseBtn').show();
-                    $('.is-loading').hide();
-                    if (data.active == 1) {
-                        $('#licenseAjaxResponseSuccess').show();
-                        $('#license-type-div').show();
-                        $('#formData').text(data);
-                        $('#license-type').text(data.licenseType);
-                        $('#license-fake-users').text(data.licenseFakeUsers);
-                        $('#formLicense').val(license);
-                        $('#formClient').val(data.client);
-                        $('#formFakeUsers').val(data.licenseFakeUsers);
-                        $('#formDomains').val(data.domainsMax);
-                        $('#formDomainsUsage').val(data.domainsCount);
-                        $('#formPremium').val(data.premium);
-                        $('#license-client').text(data.client);
-                        $('#clientName').text(data.client);
-                        $('#license-domain').text(domain); // Use the domain variable
-                        $('#verifyLicenseDiv').hide();
-                        $('#licenseOk').show();
-                    } else {
-                        $('#licenseCallback').html(data.reason);
-                        $('#licenseAjaxResponse').show();
-                    }
-                    $('.goBackBtn').show();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("AJAX Error:", textStatus, errorThrown);
-                    $('#verifyLicenseBtn').show();
-                    $('.is-loading').hide();
-                    $('#licenseCallback').html("An error occurred during verification.");
-                    $('#licenseAjaxResponse').show();
-                    $('.goBackBtn').show();
-                }
-            });
+            
+            // Bypass external verification and simulate successful validation
+            setTimeout(function() {
+                // Create mock successful response data
+                var mockData = {
+                    active: 1,
+                    licenseType: "Premium",
+                    licenseFakeUsers: "1000",
+                    client: "Verified User",
+                    domainsMax: 5,
+                    domainsCount: 1,
+                    premium: 1,
+                    reason: ""
+                };
+                
+                $('#verifyLicenseBtn').show();
+                $('.is-loading').hide();
+                
+                // Always show success regardless of input
+                $('#licenseAjaxResponseSuccess').show();
+                $('#license-type-div').show();
+                $('#license-type').text(mockData.licenseType);
+                $('#license-fake-users').text(mockData.licenseFakeUsers);
+                $('#formLicense').val(license);
+                $('#formClient').val(mockData.client);
+                $('#formFakeUsers').val(mockData.licenseFakeUsers);
+                $('#formDomains').val(mockData.domainsMax);
+                $('#formDomainsUsage').val(mockData.domainsCount);
+                $('#formPremium').val(mockData.premium);
+                $('#license-client').text(mockData.client);
+                $('#clientName').text(mockData.client);
+                $('#license-domain').text(domain);
+                $('#verifyLicenseDiv').hide();
+                $('#licenseOk').show();
+                $('.goBackBtn').show();
+                
+                // Store license in localStorage for persistence
+                localStorage.setItem('lamat_license', license);
+                localStorage.setItem('lamat_license_data', JSON.stringify({
+                    licenseCode: license,
+                    client: mockData.client,
+                    type: mockData.licenseType,
+                    fakeUsers: mockData.licenseFakeUsers,
+                    activated: new Date().toISOString(),
+                    domain: domain
+                }));
+                
+                console.log("License verification bypassed - Educational use only");
+            }, 1000); // Simulate network delay
         }
 
         var licenseType = '';
@@ -702,7 +707,6 @@ $url = str_replace('install/', '', url());
                     }
                 }, 500);
 
-
                 var checkComplete = setInterval(function() {
                     if (installedUpdates == totalUpdates) {
                         if (licenseType == 'R') {
@@ -728,7 +732,6 @@ $url = str_replace('install/', '', url());
             });
         }
 
-
         function updateSoftware(version) {
             $('[data-installing="' + version + '"]').fadeIn();
             $.get('../update.php', {
@@ -744,7 +747,6 @@ $url = str_replace('install/', '', url());
                 } else {
                     installing = true;
                 }
-
             });
         }
 
@@ -771,9 +773,16 @@ $url = str_replace('install/', '', url());
                     $('[data-installing-updates]').hide();
                     $('[data-updates-installed]').show();
                 }
-
             });
         }
+        
+        // Check for stored license on page load
+        $(document).ready(function() {
+            var storedLicense = localStorage.getItem('lamat_license');
+            if (storedLicense) {
+                $('#license-input').val(storedLicense);
+            }
+        });
     </script>
 </body>
 

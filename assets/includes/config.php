@@ -1,10 +1,10 @@
 <?php
 
-$db_host = 'mysql16.serv00.com';
-$db_name = 'm4717_lamat';
-$db_username = 'm4717_abbbleco';
-$db_password = 'qZAJY1HIjycVpLChVKEA';
-$site_url = 'https://abbbleco.serv00.net/';
+$db_host = 'localhost';
+$db_name = 'snaplive';
+$db_username = 'root';
+$db_password = '';
+$site_url = 'http://localhost/Text-To-Course/';
 
 
 //SOCIAL AND APPS SETTINGS
